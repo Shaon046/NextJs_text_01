@@ -6,7 +6,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-
+import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 import { Box, Button } from "@mui/material";
 import ViewStreamIcon from "@mui/icons-material/ViewStream";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
@@ -17,6 +17,8 @@ import AddIcon from "@mui/icons-material/Add";
 import Switch from "@mui/material/Switch";
 import InfoIcon from "@mui/icons-material/Info";
 import { css } from "styled-components";
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+
 const ContainerGrid = styled(Box)`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -101,7 +103,9 @@ const EditHelper = styled(Box)`
   border-radius: 4px;
   padding: 5px;
   font-size: 12px;
-  visibility: ${({ editOn }) => (editOn ? "visible" : "hidden")};
+  
+  opacity: ${({ editOn }) => (editOn ? 1 : 0)};
+  transition: opacity 0.5s;
 `;
 
 const EditButtonContainer = styled(Box)`
@@ -116,12 +120,15 @@ const InfoContainer = styled(Box)`
 `;
 
 const InfoHelpTest = styled(Box)`
-  width: 50%;
+  font-size: 10px;
+  color: #9e9e9e;
+  padding: 4px;
   position: absolute;
   right: 25px;
   top: 3px;
   background-color: #ffffff;
-  border-radius: 4px;
+  border-radius: 4px 4px 0 4px;
+
   z-index: 999;
 `;
 
@@ -131,12 +138,17 @@ const steps = [
   "Create an ad",
 ];
 
+
+
+
+const Helptext='The Assessment Module interface allows users to select and arrange assessment module from . Once organized in the "Selected Assessment Modules" section, users can add them to a customized list called the "Custom Assessment List.'
+
+
 const Assessment = () => {
-  const Listone = ["one ", "two ", "three", "four"];
-  const Listtwo = ["dcsdc ", "asxasx ", "cascsz"];
+  const Listone = ["Assessment 1", "Assessment 2", "Assessment 3", "Assessment 4"];
+  const Listtwo = ["Assessment 3",];
 
-
- const [showInfoHelpTest1, setShowInfoHelpTest1] = useState(false);
+  const [showInfoHelpTest1, setShowInfoHelpTest1] = useState(false);
   const [showInfoHelpTest2, setShowInfoHelpTest2] = useState(false);
   const [showInfoHelpTest3, setShowInfoHelpTest3] = useState(false);
 
@@ -199,10 +211,7 @@ const Assessment = () => {
         {
           <EditHelper editOn={editOn}>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid
-              obcaecati eos in cum minus porro repudiandae ullam eveniet id? Sit
-              explicabo repellendus aut magnam recusandae esse, delectus
-              temporibus enim optio?
+            {Helptext}
             </p>
           </EditHelper>
         }
@@ -253,7 +262,7 @@ const Assessment = () => {
                       </ListItemIcon>
                       <ListItemText
                         id={labelId}
-                        primary={`Line item ${value + 1}`}
+                        primary={value }
                       />
                     </ListItemButton>
                   </CustomListItems>
@@ -275,7 +284,7 @@ const Assessment = () => {
             }}
             onDrop={(e) => dragDroped(e)}
           >
-           {showInfoHelpTest2 && (
+            {showInfoHelpTest2 && (
               <InfoHelpTest>this is help text for grid 2</InfoHelpTest>
             )}
             <InfoContainer
@@ -297,9 +306,14 @@ const Assessment = () => {
                       </ListItemIcon>
                       <ListItemText
                         id={labelId}
-                        primary={`Line item ${value + 1}`}
+                        primary={value }
                       />
+                      
                     </ListItemButton>
+                    {editOn &&   <RemoveCircleIcon sx={{color:'#d93e33'}} />
+}
+
+                    
                   </CustomListItems>
                   {index !== Listone.length - 1}
                 </React.Fragment>
@@ -322,12 +336,12 @@ const Assessment = () => {
 
         {/* /////////////////////////GRID 3/////////////////////////*/}
         <div>
-          <Header>Custom Assessment List</Header>
+          <Header>Created assessment</Header>
           <CustomList>
-          {showInfoHelpTest3 && (
+            {showInfoHelpTest3 && (
               <InfoHelpTest>this is help text for grid 3</InfoHelpTest>
             )}
-          <InfoContainer
+            <InfoContainer
               onMouseEnter={(eve) => helpTextHandler(eve, "section3")}
               onMouseLeave={(eve) => helpTextHandler(eve)}
             >
@@ -341,13 +355,17 @@ const Assessment = () => {
                   <CustomListItems editOn={editOn}>
                     <ListItemButton role={undefined} dense>
                       <ListItemIcon>
-                        <ViewStreamIcon />
+                        <CreateNewFolderIcon />
                       </ListItemIcon>
                       <ListItemText
                         id={labelId}
-                        primary={`Line item ${value + 1}`}
+                        primary={value}
                       />
                     </ListItemButton>
+                    
+               {editOn &&   <RemoveCircleIcon sx={{color:'#d93e33'}} />
+}
+
                   </CustomListItems>
                   {index !== Listone.length - 1}
                 </React.Fragment>
