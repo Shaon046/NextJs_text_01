@@ -1,15 +1,12 @@
 import React, { useState } from "react";
 // import { styled } from "@mui/system";
 import styled from "styled-components";
-import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
-import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
+
 import { Box, Button } from "@mui/material";
 import ViewStreamIcon from "@mui/icons-material/ViewStream";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
@@ -18,7 +15,7 @@ import { FormControlLabel } from "@mui/material";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import Switch from "@mui/material/Switch";
-
+import InfoIcon from "@mui/icons-material/Info";
 import { css } from "styled-components";
 const ContainerGrid = styled(Box)`
   display: grid;
@@ -112,9 +109,20 @@ const EditButtonContainer = styled(Box)`
 `;
 
 const InfoContainer = styled(Box)`
-  width: 100%;
+  margin: 0;
+  padding: 0;
+  position: sticky;
+  float: right;
+`;
+
+const InfoHelpTest = styled(Box)`
+  width: 50%;
   position: absolute;
-  right: 5px;
+  right: 25px;
+  top: 3px;
+  background-color: #ffffff;
+  border-radius: 4px;
+  z-index: 999;
 `;
 
 const steps = [
@@ -126,6 +134,11 @@ const steps = [
 const Assessment = () => {
   const Listone = ["one ", "two ", "three", "four"];
   const Listtwo = ["dcsdc ", "asxasx ", "cascsz"];
+
+
+ const [showInfoHelpTest1, setShowInfoHelpTest1] = useState(false);
+  const [showInfoHelpTest2, setShowInfoHelpTest2] = useState(false);
+  const [showInfoHelpTest3, setShowInfoHelpTest3] = useState(false);
 
   const [editOn, setEditOn] = React.useState(false);
   const [allAssessmentModules, setAllAssessmentModules] = useState(Listone);
@@ -156,6 +169,30 @@ const Assessment = () => {
     setEditOn(eve.target.checked);
   };
 
+  const helpTextHandler = (eve, section) => {
+    if (eve.type === "mouseenter") {
+      if (section === "section1") {
+        setShowInfoHelpTest1(true);
+        setShowInfoHelpTest2(false);
+        setShowInfoHelpTest3(false);
+      } else if (section === "section2") {
+        setShowInfoHelpTest1(false);
+        setShowInfoHelpTest2(true);
+        setShowInfoHelpTest3(false);
+      } else if (section === "section3") {
+        setShowInfoHelpTest1(false);
+        setShowInfoHelpTest2(false);
+        setShowInfoHelpTest3(true);
+      }
+    }
+
+    if (eve.type === "mouseleave") {
+      setShowInfoHelpTest1(false);
+      setShowInfoHelpTest2(false);
+      setShowInfoHelpTest3(false);
+    }
+  };
+
   return (
     <>
       <EditContainer>
@@ -183,16 +220,6 @@ const Assessment = () => {
             sx={{ fontSize: "34px", color: "#757575" }}
           />
         </EditButtonContainer>
-
-        {/* <EditButtonContainer>
-          <Button
-            variant="contained"
-            sx={{ margin: "2px", height: "100%" }}
-            onClick={onEditHandler}
-          >
-            {editOn ? "Done" : "Edit"}
-          </Button>
-        </EditButtonContainer> */}
       </EditContainer>
 
       <ContainerGrid>
@@ -200,7 +227,15 @@ const Assessment = () => {
         <div>
           <Header>All Assessment Modules</Header>
           <CustomList>
-            <InfoContainer></InfoContainer>
+            {showInfoHelpTest1 && (
+              <InfoHelpTest>this is help text 1</InfoHelpTest>
+            )}
+            <InfoContainer
+              onMouseEnter={(eve) => helpTextHandler(eve, "section1")}
+              onMouseLeave={(eve) => helpTextHandler(eve)}
+            >
+              <InfoIcon sx={{ color: "#B6B2B2" }} />
+            </InfoContainer>
             {allAssessmentModules.map((value, index) => {
               const labelId = `label-${value}`;
 
@@ -232,6 +267,7 @@ const Assessment = () => {
         {/* /////////////////////////GRID 2/////////////////////////*/}
         <div>
           <Header>Selected Assessment Modules</Header>
+
           <CustomList
             droppable
             onDragOver={(e) => {
@@ -239,6 +275,15 @@ const Assessment = () => {
             }}
             onDrop={(e) => dragDroped(e)}
           >
+           {showInfoHelpTest2 && (
+              <InfoHelpTest>this is help text for grid 2</InfoHelpTest>
+            )}
+            <InfoContainer
+              onMouseEnter={(eve) => helpTextHandler(eve, "section2")}
+              onMouseLeave={(eve) => helpTextHandler(eve)}
+            >
+              <InfoIcon sx={{ color: "#B6B2B2" }} />
+            </InfoContainer>
             {selectedModules.map((value, index) => {
               const labelId = `checkbox-list-label-${value}`;
 
@@ -260,7 +305,6 @@ const Assessment = () => {
                 </React.Fragment>
               );
             })}
-
             <Fab
               color="primary"
               aria-label="add"
@@ -279,8 +323,16 @@ const Assessment = () => {
         {/* /////////////////////////GRID 3/////////////////////////*/}
         <div>
           <Header>Custom Assessment List</Header>
-
           <CustomList>
+          {showInfoHelpTest3 && (
+              <InfoHelpTest>this is help text for grid 3</InfoHelpTest>
+            )}
+          <InfoContainer
+              onMouseEnter={(eve) => helpTextHandler(eve, "section3")}
+              onMouseLeave={(eve) => helpTextHandler(eve)}
+            >
+              <InfoIcon sx={{ color: "#B6B2B2" }} />
+            </InfoContainer>
             {Listone.map((value, index) => {
               const labelId = `checkbox-list-label-${value}`;
 
