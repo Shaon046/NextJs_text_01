@@ -1,13 +1,12 @@
 * {
   margin: 0px;
   padding: 0px;
-  box-sizing:border-box;
   box-sizing: border-box;
   font-family: "Josefin Sans", sans-serif;
 }
 :root {
   --primary-color: #00756a;
-  --primary-content:#363555;
-  --gray-light:#f2f4f5;
-  --gray-deep:#636d77
+  --primary-content: #363555;
+  --gray-light: #f2f4f5;
+  --gray-deep: #636d77;
 }
